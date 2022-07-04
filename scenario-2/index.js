@@ -1,8 +1,3 @@
-/*
- * This script is still in progress.
- * You will get errors if you try to run it.
- */
-const v8 = require("node:v8");
 const fs = require("fs");
 const path = require("path");
 
@@ -14,22 +9,36 @@ const context = isolate.createContextSync();
 const jail = context.global;
 jail.setSync("global", jail.derefInto());
 
-const code = fs.readFileSync(path.resolve(__dirname, "fn-dummy.js"), "utf8");
+// log
+jail.setSync("log", function (...args) {
+  console.log(...args);
+});
 
-const script = isolate.compileScriptSync(code);
-script.runSync(context);
+// fetch
+async function myFetch(...args) {
+  const res = await fetch(...args);
+  const data = await res.json();
 
-const fnRef = jail.getSync("dummy", { reference: true });
+  return new ivm.ExternalCopy(data).copyInto();
+}
 
-const result = fnRef
-  .applySync(undefined, [], { result: { promise: true } })
-  .then((result) => console.log(result));
+context.evalClosureSync(
+  `global.myFetch = function(fetchProps) {
+    const data = $0.applySyncPromise(
+      undefined,
+      [fetchProps],
+      { arguments: { copy: true } }
+    );
 
-/*
- * Here we take the heap snapshot and
- * then we stored it in a file.
- */
-// const filename = "scenario-1.heapsnapshot";
-// const stream = v8.getHeapSnapshot();
-// const file = path.join(__dirname, filename);
-// stream.pipe(fs.createWriteStream(file));
+    return data
+  }`,
+  [myFetch],
+  { arguments: { reference: true } }
+);
+
+const code = fs.readFileSync(
+  path.resolve(__dirname, "fn-fetch-air-quality.js"),
+  "utf8"
+);
+
+context.eval(code);

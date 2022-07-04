@@ -1,8 +1,4 @@
-/*
- * This functions is NOT being used yet.
- * It will be used in scenario #2 and #3.
- */
-async function getAirQualitySummary() {
+function getAirQualitySummary() {
   const location = "shanghai";
   const token = "f96e87a838ca30b6f81535a13fc224951260b810";
 
@@ -14,8 +10,10 @@ async function getAirQualitySummary() {
     },
   };
 
-  const response = await fetch(endpoint, init);
-  const content = await response.json();
+  // const response = await fetch(endpoint, init);
+  // const content = await response.json();
+
+  const content = myFetch(endpoint, init);
 
   let html_content = "<h1>Weather 🌦</h1>";
   html_content += `<p>This is a demo using Workers geolocation data. </p>`;
@@ -40,5 +38,9 @@ async function getAirQualitySummary() {
     </div>
   </body>`;
 
+  log(html);
+
   return html;
 }
+
+getAirQualitySummary();
