@@ -46,11 +46,7 @@ function runIsolates() {
       );
 
       const script = await isolate.compileScript(code);
-
-      // We didn't run `script` here
-      // return script.run(context);
-
-      return 1;
+      return script.run(context);
     });
 
   Promise.all(promises).then((_results) => {

@@ -40,7 +40,7 @@ process.on("exit", () => {
  * This function `askToProceed` holds the script execution
  * until the user inputs <Enter> key. With this behavior,
  * user could run this script with `--inspect` flag like:
- * `node --inspect scenario-2`
+ * `node --inspect scenario-3`
  * and then open `chrome://inspect` in the browser to
  * start recording CPU or memory usage before `runIsolates()`
  */
