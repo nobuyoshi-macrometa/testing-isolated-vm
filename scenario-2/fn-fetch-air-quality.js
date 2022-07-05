@@ -38,7 +38,7 @@ function getAirQualitySummary() {
     </div>
   </body>`;
 
-  log(html);
+  // log(html);
 
   return html;
 }
