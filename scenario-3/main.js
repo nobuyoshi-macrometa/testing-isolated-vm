@@ -28,16 +28,18 @@ function runIsolates() {
 
       context.evalClosureSync(
         `global.myFetch = function(fetchProps) {
-        const data = $0.applySyncPromise(
-          undefined,
-          [fetchProps],
-          { arguments: { copy: true } }
-        );
-
-        return data
-      }`,
+          const data = $0.applySyncPromise(
+            undefined,
+            [fetchProps],
+            { arguments: { copy: true } }
+          );
+          return data
+        } `,
         [myFetch],
-        { arguments: { reference: true } }
+        {
+          timeout: 50,
+          arguments: { reference: true },
+        }
       );
 
       const code = fs.readFileSync(
@@ -46,10 +48,11 @@ function runIsolates() {
       );
 
       const script = await isolate.compileScript(code);
-      return script.run(context);
+      return script.run(context, { timeout: 50 });
     });
 
-  Promise.all(promises).then((_results) => {
+  Promise.allSettled(promises).then((results) => {
+    // console.log(results.map((result) => result.status));
     console.log("Script Ended");
   });
 }
