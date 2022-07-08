@@ -26,7 +26,7 @@ This repository contains scripts and additional notes related to the test scenar
 - Follow the steps mentioned under the "connect" tab up to step 2
 - Once you link to the `pm2` (step 2), run the following command in your terminal:  
   ```
-  pm2 start scenario-3
+  pm2 start scenario-3 --fresh --no-autorestart
   ```
   Instead of `scenario-3` you can use any other scenario
 - Now you can see the live monitoring for your script in `pm2` dashboard!
@@ -34,14 +34,15 @@ This repository contains scripts and additional notes related to the test scenar
 ## Test Results 
 
 ### Scenario 1
-Total memory used: 
+Total memory used by Node.js: **48 MB**
+![scenario-1](./images/scenario-1.png)
 ​
 ### Scenario 2  
-Total memory used: **164 MB**
+Total memory used: **153 MB**
 <br/>  
 ![scenario-2](./images/scenario-2.png)
 ​
 ### Scenario 3  
-Total memory used: **221 MB**  
+Total memory used: **196 MB**  
 </br>
 ![scenario-3](./images/scenario-3.png)
