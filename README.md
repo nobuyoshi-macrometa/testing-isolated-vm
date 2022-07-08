@@ -18,6 +18,13 @@ This repository contains scripts and additional notes related to the test scenar
 - Automatically terminate an isolate if execution takes more than 50ms. 
 - Measure maximum memory consumed by Node.js in the entire operation.
 
+### Scenario 4
+- Step A. Create 100 isolates.
+- Step B. Compile scripts in each isolate.
+- Step C. Run the scripts in each isolate.
+
+The idea is to go from Step A to Step B only if the preceding step is completed, i.e. Step A.  
+Similarly Step B must be completed in order to run Step C.
 ## How to install and use `pm2` monitor
 
 - Signup for https://app.pm2.io
